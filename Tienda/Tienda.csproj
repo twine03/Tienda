@@ -296,7 +296,7 @@
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Producto\Delete.cshtml" />
     <Content Include="Views\Producto\Details.cshtml" />
-    <Content Include="Views\Producto\Edit.cshtml" />
+    <Content Include="Views\Producto\_Edit.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Producto\_Create.cshtml" />
     <Content Include="Views\Marca\Create.cshtml" />
