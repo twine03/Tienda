@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_NoNav.cshtml";
+}
+
+<div>
+    <h1>400</h1>
+    <h2>La pagina o el recurso buscado no existe <strong>:(</strong></h2>
+    @if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning"
+             >@ViewBag.mensaje
+        </div>
+    }
+</div>
