@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Tienda.Helpers;
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -22,9 +23,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    @Html.MenuItem("Inicio", "Index", "Home")
+                    @Html.MenuItem("Acerca de", "About", "Home")
+                    @Html.MenuItem("Contacto", "Contact", "Home")
+                    @*
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    *@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" 
                            data-toggle="dropdown" role="button" 
@@ -33,9 +39,10 @@
                                 <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Categorias", "Index", "Categoria")</li>
-                            <li>@Html.ActionLink("Marcas", "Index", "Marca")</li>
-                            <li>@Html.ActionLink("Productos", "Index", "Producto")</li>
+                            @Html.MenuItem("Categorias", "Index", "Categoria")
+                            @Html.MenuItem("Marcas", "Index", "Marca")
+                            @Html.MenuItem("Productos", "Index", "Producto")
+                            
                         </ul>
                     </li>
                 

@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<Tienda.Models.Marca>
-
+@using Tienda.Helpers
 @{
     ViewBag.Title = "Index";
+    
 }
 
 <h2>Index</h2>
@@ -9,6 +10,9 @@
 <p>
     @Html.ActionLink("Create New", "Create", "Marca", htmlAttributes: new { data_modal = "" })
 </p>
+
+@Html.alerta_roja("Ups.. ha ocurrido un error")
+
 <table id="lista_general" class="table table-responsive table-bordered table-striped">
     <thead>
         <tr>

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Tienda.Models.Producto>
-
+@using Tienda.Helpers;
 @{
     ViewBag.Title = "Index";
     String espacioNombre = "Productos";
@@ -59,9 +59,10 @@
                     @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { data_modal = "" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.BootstrapIcon_Button("Editar", "Edit", "Edit", "Producto", btnType: "btn-warning", icon: "fa-pencil",  routeValues: new { id = item.Id }, htmlAtributes: new { data_modal = "" })
+                    @Html.BootstrapIcon_Button("Detalle", "Detalle", "Details", "Producto", btnType: "btn-primary", icon: "glyphicon-eye-open", routeValues: new { id = item.Id })
+                    @Html.BootstrapIcon_Button("Borrar", "Borrar", "Delete", "Producto", btnType: "btn-danger",  routeValues: new { id = item.Id })
+
                 </td>
             </tr>
         }
