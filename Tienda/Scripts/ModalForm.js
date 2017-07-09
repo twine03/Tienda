@@ -21,8 +21,12 @@ function bindForm(dialog) {
             success: function (result) {
                 if (result.success) {
                     $("#myModal").modal('hide');
-                    $("#contenido-lista").empty();
-                    $("#contenido-lista").load(result.url);
+                    if (result.url) {
+                        $("#contenido-lista").empty();
+                        $("#contenido-lista").load(result.url);
+                    } else {
+                        crear_tabla(result.data);
+                    }
                     bindcontrols();
                     //window.location.reload();
                 } else {

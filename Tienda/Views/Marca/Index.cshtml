@@ -7,27 +7,72 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "Marca", htmlAttributes: new { data_modal = "" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table id="lista_general" class="table table-responsive table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th style="width:300px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td >
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }, htmlAttributes: new { data_modal = "" }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+
+<div id="acciones" class="hidden">
+    <a data-modal="" href="/Marca/Edit/2">Edit</a> |
+    <a href="/Marca/Details/2">Details</a> |
+    <a href="/Marca/Delete/2">Delete</a>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/ModalForm.js"></script>
+    <script>
+        function crear_tabla(data) {
+            $("#lista_general > tbody").empty();
+            $.each(data, function () {
+                //var acciones = $("#acciones");
+                //acciones.removeClass("hidden");
+
+                var tr = $("<tr>");
+                tr.append('<td>' + this.Nombre + '</td>')
+
+                var td_accioes = $('<td>');
+                td_accioes.append('<a data-modal="" href="@Url.Action("Edit", "Marca")/' + this.Id + '">Edit</a> |');
+                td_accioes.append('<a href="@Url.Action("Details", "Marca")/' + this.Id + '">Details</a> |');
+                td_accioes.append('<a href="@Url.Action("Delete", "Marca")/' + this.Id + '">Delete</a>');
+
+                tr.append(td_accioes);
+                $("#lista_general > tbody").append(tr);
+            });
+        }
+    </script>
+}

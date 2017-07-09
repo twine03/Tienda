@@ -38,7 +38,7 @@ namespace Tienda.Controllers
         // GET: Marca/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView("_Create");
         }
 
         // POST: Marca/Create
@@ -52,10 +52,12 @@ namespace Tienda.Controllers
             {
                 db.Marcas.Add(marca);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var data = db.Marcas.ToList();
+                return Json(new { data = data, success = true, mensaje = "Producto registrado exitosamente" });
+                
             }
 
-            return View(marca);
+            return PartialView("_Create",marca);
         }
 
         // GET: Marca/Edit/5
