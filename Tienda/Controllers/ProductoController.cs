@@ -21,6 +21,12 @@ namespace Tienda.Controllers
             return View(productos);
         }
 
+        public ActionResult Lista()
+        {
+            var productos = db.Productos.ToList();
+            return PartialView(productos);
+        }
+
         // GET: Producto/Details/5
         public ActionResult Details(int? id)
         {

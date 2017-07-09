@@ -17,7 +17,8 @@ function bindForm(dialog) {
             success: function (result) {
                 if (result.success) {
                     $("#myModal").modal('hide');
-                    location.reload();
+                    $("#contenido-lista").load(result.url);
+                    //window.location.reload();
                 } else {
                     $("#myModalContent").html(result)
                     bindForm();
