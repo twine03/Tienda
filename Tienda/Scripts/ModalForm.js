@@ -23,11 +23,12 @@ function bindForm(dialog) {
                     $("#myModal").modal('hide');
                     if (result.url) {
                         $("#contenido-lista").empty();
-                        $("#contenido-lista").load(result.url);
+                        $("#contenido-lista").load(result.url, function () {
+                            bindcontrols();
+                        });
                     } else {
                         crear_tabla(result.data);
                     }
-                    bindcontrols();
                     //window.location.reload();
                 } else {
                     $("#myModalContent").html(result)

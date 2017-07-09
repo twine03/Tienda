@@ -47,11 +47,6 @@
     </div>
 </div>
 
-<div id="acciones" class="hidden">
-    <a data-modal="" href="/Marca/Edit/2">Edit</a> |
-    <a href="/Marca/Details/2">Details</a> |
-    <a href="/Marca/Delete/2">Delete</a>
-</div>
 
 @section Scripts {
     <script src="~/Scripts/ModalForm.js"></script>
@@ -59,9 +54,6 @@
         function crear_tabla(data) {
             $("#lista_general > tbody").empty();
             $.each(data, function () {
-                //var acciones = $("#acciones");
-                //acciones.removeClass("hidden");
-
                 var tr = $("<tr>");
                 tr.append('<td>' + this.Nombre + '</td>')
 
