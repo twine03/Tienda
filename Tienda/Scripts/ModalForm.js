@@ -1,4 +1,8 @@
 ﻿$(function () {
+    bindcontrols();
+});
+
+function bindcontrols() {
     $("a[data-modal]").on("click", function (e) {
         $("#myModalContent").load(this.href, function () {
             $("#myModal").modal({ keyboard: true }, 'show');
@@ -6,7 +10,7 @@
         });
         return false;
     });
-});
+}
 
 function bindForm(dialog) {
     $('form', dialog).submit(function () {
@@ -17,7 +21,9 @@ function bindForm(dialog) {
             success: function (result) {
                 if (result.success) {
                     $("#myModal").modal('hide');
+                    $("#contenido-lista").empty();
                     $("#contenido-lista").load(result.url);
+                    bindcontrols();
                     //window.location.reload();
                 } else {
                     $("#myModalContent").html(result)

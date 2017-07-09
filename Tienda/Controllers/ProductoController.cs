@@ -100,7 +100,8 @@ namespace Tienda.Controllers
             {
                 db.Entry(producto).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Url.Action("Lista", "Producto", new { id = producto.Id });
+                return Json(new {url=url, success = true, mensaje = "Producto registrado exitosamente" });
             }
             ViewData["Categorias"] = db.Categorias.ToList();
             ViewBag.Marcas = new SelectList(db.Marcas.ToList(), "Id", "Nombre");
