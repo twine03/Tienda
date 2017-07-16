@@ -18,6 +18,12 @@ namespace Tienda.Models
             : base ("TiendaConectionString")
         {
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Producto>().Property(m => m.Imagen).IsOptional();
+            //modelBuilder.Entity<Producto>().HasKey(p => new { p.Id, p.marcaid });
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 }
