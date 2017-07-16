@@ -10,6 +10,13 @@ function bindcontrols() {
         });
         return false;
     });
+    $("a[data-modal-file]").on("click", function (e) {
+        $("#myModalContent").load(this.href, function () {
+            $("#myModal").modal({ keyboard: true }, 'show');
+            bindFormFile(this);
+        });
+        return false;
+    });
 }
 
 function bindForm(dialog) {
@@ -35,6 +42,40 @@ function bindForm(dialog) {
                     bindForm();
                 }
                 
+            },
+            error: function (result) {
+                alert(result);
+            }
+        });
+        return false;
+    });
+}
+
+function bindFormFile(dialog) {
+    $('form', dialog).submit(function () {
+        data = new FormData($(this)[0]);
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: data,
+            contentype: false,
+            success: function (result) {
+                if (result.success) {
+                    $("#myModal").modal('hide');
+                    if (result.url) {
+                        $("#contenido-lista").empty();
+                        $("#contenido-lista").load(result.url, function () {
+                            bindcontrols();
+                        });
+                    } else {
+                        crear_tabla(result.data);
+                    }
+                    //window.location.reload();
+                } else {
+                    $("#myModalContent").html(result)
+                    bindForm();
+                }
+
             },
             error: function (result) {
                 alert(result);

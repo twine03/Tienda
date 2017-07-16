@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -61,6 +62,11 @@ namespace Tienda.Controllers
         {
             if (ModelState.IsValid)
             {
+                HttpPostedFileBase file = Request.Files["ImageData"];
+                if (file != null)
+                {
+                    Utilidades.UploadImageProductoToDataBase(file, producto);
+                }
                 db.Productos.Add(producto);
                 db.SaveChanges();
                 string url = Url.Action("Index", "Producto", new { id = producto.Id });
@@ -98,6 +104,11 @@ namespace Tienda.Controllers
         {
             if (ModelState.IsValid)
             {
+                HttpPostedFileBase file = Request.Files["ImageData"];
+                if (file != null)
+                {
+                    Utilidades.UploadImageProductoToDataBase(file, producto);
+                }
                 db.Entry(producto).State = EntityState.Modified;
                 db.SaveChanges();
                 string url = Url.Action("Lista", "Producto", new { id = producto.Id });
@@ -141,6 +152,28 @@ namespace Tienda.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult RegresarImagen(int Id)
+        {
+            if (Id == 0)
+            {
+                Image Imagen = 
+                    Image.FromFile(
+                        Server.MapPath("~/Images/image_no_found.jpg")
+                        );
+                Byte[] arr = Utilidades.ImageToArray(Imagen);
+                return File(arr, "image/jpg");
+            }
+            else
+            {
+                byte[] imagen = 
+                    Utilidades.GetImageProductoFromDataBase(Id);
+                if (imagen != null)
+                    return File(imagen, "image/jpg");
+                else
+                    return null;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -47,6 +48,22 @@ namespace Tienda
             BinaryReader reader = new BinaryReader(file.InputStream);
             imageByte = reader.ReadBytes((int)file.ContentLength);
             return imageByte;
+        }
+
+        internal static byte[] ImageToArray(Image imagen)
+        {
+            MemoryStream ms = new MemoryStream();
+            imagen.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
+        }
+
+        internal static byte[] GetImageProductoFromDataBase(int id)
+        {
+            TiendaContext db = new TiendaContext();
+            var q = from tmp in db.Productos
+                    where tmp.Id == id select tmp.Imagen;
+            byte[] imagen = q.First();
+            return imagen;
         }
     }
 }

@@ -18,8 +18,7 @@ namespace Tienda.Models
         [DataType(DataType.ImageUrl)]
         public byte[] Imagen { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
+
         public string ImageURL { get; set; }
 
         #region FOREINGKEYS
