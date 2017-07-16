@@ -47,17 +47,27 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Create
+       [Authorize]
         public ActionResult Create()
         {
-            ViewData["categorias"] = db.Categorias.ToList();
-            ViewBag.Marcas = new SelectList(db.Marcas.ToList(), "Id", "Nombre");
-            return PartialView("_Create");
+            if (Request.IsAuthenticated)
+            {
+                ViewData["categorias"] = db.Categorias.ToList();
+                ViewBag.Marcas = new SelectList(db.Marcas.ToList(), "Id", "Nombre");
+                return PartialView("_Create");
+            }
+            else
+            {
+                return Redirect("/Account/LoginPartial");
+            }
+           
         }
         // POST: Producto/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(Producto producto)
         {
             if (ModelState.IsValid)
@@ -79,6 +89,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,6 +111,7 @@ namespace Tienda.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,Nombre,Costo,Precio,categoriaid, marcaid")] Producto producto)
         {
             if (ModelState.IsValid)
