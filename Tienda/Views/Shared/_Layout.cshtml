@@ -41,7 +41,10 @@
                         <ul class="dropdown-menu">
                             @Html.MenuItem("Categorias", "Index", "Categoria")
                             @Html.MenuItem("Marcas", "Index", "Marca")
-                            @Html.MenuItem("Productos", "Index", "Producto")
+                            @if (User.IsInRole("0004"))
+                            {
+                                @Html.MenuItem("Productos", "Index", "Producto")
+                            }
                             
                         </ul>
                     </li>

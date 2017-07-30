@@ -176,6 +176,64 @@ namespace Tienda.Models
                 return roleManager.RoleExists(roleName);
             }
         }
+
+        public void CreatePermision(string permisionName, string permisionDescription)
+        {
+            Permision permision = new Permision()
+            {
+                Name = permisionName,
+                Description = permisionDescription
+            };
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                db.Permisions.Add(permision);
+                db.SaveChanges();
+            }
+        }
+        public void CreatePermision(string permisionDescription)
+        {
+            Permision permision = new Permision()
+            {
+                Name = "Implementar alguna rutina que genere el codigo de manera aleatoria",
+                Description = permisionDescription
+            };
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                db.Permisions.Add(permision);
+                db.SaveChanges();
+            }
+        }
+
+        public void AddPermisionToRole(string permisionName, string roleName)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var role = db.Roles
+                    .FirstOrDefaultAsync(
+                    r => r.Name.Equals(
+                        roleName, 
+                        StringComparison.CurrentCultureIgnoreCase)
+                    ).GetAwaiter().GetResult();
+
+                var permision = db.Permisions.FirstOrDefaultAsync(
+                        p => p.Name.Equals(
+                                permisionName,
+                                StringComparison.CurrentCultureIgnoreCase
+                            )
+                    ).GetAwaiter().GetResult();
+
+                if(role!=null & permision != null)
+                {
+                    RolePermision rp = new RolePermision()
+                    {
+                        PermisionId=permision.Id,
+                        RoleId=role.Id
+                    };
+                    db.RolePermisions.Add(rp);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

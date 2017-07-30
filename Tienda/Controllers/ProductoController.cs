@@ -16,12 +16,13 @@ namespace Tienda.Controllers
         private TiendaContext db = new TiendaContext();
 
         // GET: Producto
+        [Authorize(Roles ="0004")]
         public ActionResult Index()
         {
             var productos = db.Productos.ToList();
             return View(productos);
         }
-
+        [Authorize(Roles = "0004")]
         public ActionResult Lista()
         {
             var productos = db.Productos.ToList();
@@ -29,6 +30,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Details/5
+        [Authorize(Roles = "0004")]
         public ActionResult Details(int? id)
         {
             if (id == null)
