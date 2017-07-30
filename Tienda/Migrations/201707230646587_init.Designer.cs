@@ -7,13 +7,13 @@ namespace Tienda.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class marcas : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(marcas));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707021449483_marcas"; }
+            get { return "201707230646587_init"; }
         }
         
         string IMigrationMetadata.Source

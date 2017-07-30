@@ -47,7 +47,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Create
-       [Authorize]
+        [Authorize(Roles = "0001")]
         public ActionResult Create()
         {
             if (Request.IsAuthenticated)
@@ -89,7 +89,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Edit/5
-        [Authorize]
+        [Authorize(Roles ="0002")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -132,6 +132,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Delete/5
+        [Authorize(Roles ="Borrar")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

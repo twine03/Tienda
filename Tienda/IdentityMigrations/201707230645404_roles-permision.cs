@@ -3,16 +3,39 @@ namespace Tienda.IdentityMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class rolespermision : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.AspNetPermisions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.AspNetRolePermisions",
+                c => new
+                    {
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                        PermisionId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.RoleId, t.PermisionId })
+                .ForeignKey("dbo.AspNetPermisions", t => t.PermisionId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.RoleId)
+                .Index(t => t.PermisionId);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 256),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
@@ -35,6 +58,8 @@ namespace Tienda.IdentityMigrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        FirstName = c.String(),
+                        LastName = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -83,17 +108,23 @@ namespace Tienda.IdentityMigrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.AspNetRolePermisions", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.AspNetRolePermisions", "PermisionId", "dbo.AspNetPermisions");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.AspNetRolePermisions", new[] { "PermisionId" });
+            DropIndex("dbo.AspNetRolePermisions", new[] { "RoleId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.AspNetRolePermisions");
+            DropTable("dbo.AspNetPermisions");
         }
     }
 }

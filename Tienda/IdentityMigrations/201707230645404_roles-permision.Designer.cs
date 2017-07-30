@@ -7,13 +7,13 @@ namespace Tienda.IdentityMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class rolespermision : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(rolespermision));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707230004073_InitialCreate"; }
+            get { return "201707230645404_roles-permision"; }
         }
         
         string IMigrationMetadata.Source
