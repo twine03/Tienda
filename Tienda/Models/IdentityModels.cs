@@ -28,6 +28,17 @@ namespace Tienda.Models
         }
     }
 
+    [Table("AspNetPermisionTypes")]
+    public class PermisionType
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+
+        public virtual ICollection<Permision> Permisions { get; set; }
+
+    }
     [Table("AspNetPermisions")]
     public class Permision
     {
@@ -36,7 +47,18 @@ namespace Tienda.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        public int? PermisionTypeID { get; set; }
+        public int? ParentID { get; set; }
+
+        [ForeignKey("PermisionTypeID")]
+        public virtual PermisionType PermisionType { get; set; }
+        
         public virtual ICollection<RolePermision> RolePermisions { get; set; }
+
+        [ForeignKey("ParentID")]
+        public virtual Permision Parent { get; set; }
+
+        public virtual ICollection<Permision> Childs { get; set; }
     }
 
     [Table("AspNetRolePermisions")]
