@@ -11,19 +11,23 @@ function bindcontrols() {
         return false;
     });
     $("a[data-modal-file]").on("click", function (e) {
-        var URL = window.location.pathname;
-        $.ajax({
-            url: this.href,
-            type: "get",
-            success: function (result) {
-                if (result === "")
-                    location.href = "/Account/Login?ReturnUrl="+ URL;
-                $("#myModalContent").html(result);
-                $("#myModal").modal({ keyboard: true }, 'show');
-                bindFormFile(this);
-            }
+        $("#myModalContent").load(this.href, function () {
+            $("#myModal").modal({ keyboard: true }, 'show');
+            bindFormFile(this);
         });
         return false;
+        //$.ajax({
+        //    url: this.href,
+        //    type: "get",
+        //    success: function (result) {
+        //        if (result === "")
+        //            location.href = "/Account/Login?ReturnUrl="+ URL;
+        //        $("#myModalContent").html(result);
+        //        $("#myModal").modal({ keyboard: true }, 'show');
+        //        bindFormFile($("#myModalContent"));
+        //    }
+        //});
+        //return false;
     });
 }
 
@@ -50,9 +54,6 @@ function bindForm(dialog) {
                     bindForm();
                 }
                 
-            },
-            error: function (result) {
-                alert(result);
             }
         });
         return false;
@@ -61,12 +62,28 @@ function bindForm(dialog) {
 
 function bindFormFile(dialog) {
     $('form', dialog).submit(function () {
+        $(this).removeData("validator").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse($(this))
+        myValidate($(this));
+        var validator = $(this).validate(); // obtain validator
+        var anyError = false;
+        $(this).find("input").each(function () {
+            if (!validator.element(this)) { // validate every input element inside this step
+                anyError = true;
+            }
+        });
+
+        if (anyError)
+            return false; 
+        
+
         data = new FormData($(this)[0]);
         $.ajax({
             url: this.action,
             type: this.method,
             data: data,
-            contentype: false,
+            processData: false,
+            contentType: false,
             success: function (result) {
                 if (result.success) {
                     $("#myModal").modal('hide');
@@ -78,15 +95,12 @@ function bindFormFile(dialog) {
                     } else {
                         crear_tabla(result.data);
                     }
-                    //window.location.reload();
-                } else {
+                }
+                else {
                     $("#myModalContent").html(result)
-                    bindForm();
+                    bindFormFile($("#myModalContent"));
                 }
 
-            },
-            error: function (result) {
-                alert(result);
             }
         });
         return false;
