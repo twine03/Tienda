@@ -13,8 +13,10 @@ namespace Tienda.Models
     {
         
         public float Costo { get; set; }
-
-        [CompararPrecio("Costo","El precio de venta debe ser mayor o igual que el costo de compra")]
+        [Display(Name = "Precio de venta:")]
+        [GenericCompare(CompareToPropertyName = "Costo",
+        OperatorName = GenericCompareOperator.GreaterThanOrEqual,
+        ErrorMessage = "{0} debe ser mayor o igual que {1}")]
         public float Precio { get; set; }
 
         [DataType(DataType.ImageUrl)]
