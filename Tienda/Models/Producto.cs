@@ -11,7 +11,9 @@ namespace Tienda.Models
     [Table("Productos")]
     public class Producto: Entidad
     {
-        
+        [ExcludeChar("/.,!@#$%")]
+        public override string Nombre { get; set; }
+
         public float Costo { get; set; }
         [Display(Name = "Precio de venta:")]
         [GenericCompare(CompareToPropertyName = "Costo",

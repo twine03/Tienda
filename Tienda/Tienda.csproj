@@ -215,6 +215,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="CustomValidations\CompararPrecioAttribute.cs" />
+    <Compile Include="CustomValidations\ExcludeCharAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
