@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Tienda.CustomValidations;
 
 namespace Tienda.Models
 {
@@ -13,6 +14,7 @@ namespace Tienda.Models
         
         public float Costo { get; set; }
 
+        [CompararPrecio("Costo","El precio de venta debe ser mayor o igual que el costo de compra")]
         public float Precio { get; set; }
 
         [DataType(DataType.ImageUrl)]

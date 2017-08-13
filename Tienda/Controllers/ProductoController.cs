@@ -130,7 +130,7 @@ namespace Tienda.Controllers
             }
             ViewData["Categorias"] = db.Categorias.ToList();
             ViewBag.Marcas = new SelectList(db.Marcas.ToList(), "Id", "Nombre");
-            return View("_Edit",producto);
+            return PartialView("_Edit",producto);
         }
 
         // GET: Producto/Delete/5
