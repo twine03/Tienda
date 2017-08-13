@@ -5,11 +5,13 @@
         // debugger;
         var propelename = params.split(",")[0];
         var operName = params.split(",")[1];
+
         if (params == undefined || params == null || params.length == 0 ||
             value == undefined || value == null || value.length == 0 ||
             propelename == undefined || propelename == null || propelename.length == 0 ||
             operName == undefined || operName == null || operName.length == 0)
             return true;
+
         var valueOther = $(propelename).val();
         var val1 = (isNaN(value) ? Date.parse(value) : eval(value));
         var val2 = (isNaN(valueOther) ? Date.parse(valueOther) : eval(valueOther));
