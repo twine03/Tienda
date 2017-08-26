@@ -264,6 +264,10 @@ namespace Tienda.Models
         public DbSet<Permision> Permisions { get; set; }
         public DbSet<RolePermision> RolePermisions { get; set; }
 
+
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
         public ApplicationDbContext()
             : base("TiendaConectionString", throwIfV1Schema: false)
         {
@@ -277,6 +281,8 @@ namespace Tienda.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RolePermision>().HasKey(r => new { r.RoleId, r.PermisionId});
+
+            modelBuilder.Entity<Producto>().Property(m => m.Imagen).IsOptional();
             base.OnModelCreating(modelBuilder);
         }
     }
