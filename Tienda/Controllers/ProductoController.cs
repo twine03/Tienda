@@ -13,7 +13,7 @@ namespace Tienda.Controllers
 {
     public class ProductoController : Controller
     {
-        private TiendaContext db = new TiendaContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Producto
         [Authorize(Roles ="0004")]

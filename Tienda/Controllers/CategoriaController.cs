@@ -12,7 +12,7 @@ namespace Tienda.Controllers
 {
     public class CategoriaController : Controller
     {
-        private TiendaContext db = new TiendaContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categoria
         public ActionResult Index()

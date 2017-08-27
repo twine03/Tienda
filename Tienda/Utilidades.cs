@@ -26,7 +26,7 @@ namespace Tienda
             {
                 if (producto.Id > 0)
                 {
-                    TiendaContext db = new TiendaContext();
+                    ApplicationDbContext db = new ApplicationDbContext();
                     var q = from temp in db.Productos where temp.Id 
                             == producto.Id select temp.Imagen;
                     byte[] cover = q.First();
@@ -59,7 +59,7 @@ namespace Tienda
 
         internal static byte[] GetImageProductoFromDataBase(int id)
         {
-            TiendaContext db = new TiendaContext();
+            ApplicationDbContext db = new ApplicationDbContext();
             var q = from tmp in db.Productos
                     where tmp.Id == id select tmp.Imagen;
             byte[] imagen = q.First();

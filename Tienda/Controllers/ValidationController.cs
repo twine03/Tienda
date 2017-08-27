@@ -9,7 +9,7 @@ namespace Tienda.Controllers
 {
     public class ValidationController : Controller
     {
-        private TiendaContext db = new TiendaContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
         [HttpGet]
         public JsonResult IsCategoriaNameExist(string Nombre)
         {

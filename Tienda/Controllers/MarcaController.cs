@@ -12,7 +12,7 @@ namespace Tienda.Controllers
 {
     public class MarcaController : Controller
     {
-        private TiendaContext db = new TiendaContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Marca
         public ActionResult Index()
