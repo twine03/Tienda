@@ -22,6 +22,8 @@ namespace Tienda.Controllers
             var productos = db.Productos.ToList();
             return View(productos);
         }
+
+
         [Authorize(Roles = "0004")]
         public ActionResult Lista()
         {

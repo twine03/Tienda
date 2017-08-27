@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/jtree/themes/default/style.min.css" rel="stylesheet" />
+}
+<h2>Permisos</h2>
+<div class="row">
+    <div class="col-sm-3">
+        <div>
+            <fieldset>
+                <legend>Controles</legend>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <button onclick="nuevo()" class="form-control btn btn-success">Nuevo <i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <button onclick="editar()" class="form-control btn btn-warning">Editar <i class="fa fa-edit"></i></button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="form-control btn btn-danger">Eliminar <i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <button class="form-control btn btn-primary">Subir <i class="fa fa-caret-up"></i></button>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <button class="form-control btn btn-primary">Bajar <i class="fa fa-caret-down"></i></button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <div id="jstree_demo_div"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/ModalForm.js"></script>
+    <script type="text/javascript" src="~/Scripts/jstree/jstree.min.js"></script>
+    <script>
+        var jstree;
+        $(document).ready(function () {
+            $.ajax({
+                url: "@Url.Action("GerPermisos", "Permisos")",
+                method: "GET",
+                success: function (permisos) {
+                    jstree = $('#jstree_demo_div').jstree({
+                        "core": {
+                            "multiple": false,
+                            "animation": 0,
+                            "check_callback": true,
+                            "themes": { "stripes": true },
+                            'data': permisos
+                        },
+                        "types": {
+                            "Modulo": {
+                                "icon": "glyphicon glyphicon-th",
+                                "valid_children": ["Sub Modulo", "Menu", "Boton"]
+                            },
+                            "Sub Modulo": {
+                                "icon": "glyphicon glyphicon-th-large",
+                                "valid_children": ["Menu", "Boton"]
+                            },
+                            "Menu": {
+                                "icon": "glyphicon glyphicon-align-justify",
+                                "valid_children": ["Sub Menu"]
+                            },
+                            "Sub Menu": {
+                                "icon": "glyphicon glyphicon-list",
+                                "valid_children": ["Boton"]
+                            },
+                            "Boton": {
+                                "icon": "glyphicon glyphicon-inbox",
+                                "valid_children": []
+                            }
+                        },
+
+                        "plugins": [
+                           "wholerow",
+                           "types",
+                        ]
+                    });
+                    jstree.bind("loaded.jstree", function (event, data) {
+                        // you get two params - event & data - check the core docs for a detailed description
+                        $(this).jstree("open_all");
+                    });
+                }
+            });
+        });
+
+        function nuevo() {
+            if ($("#jstree_demo_div").jstree("get_selected")[0] == undefined) {
+                alert("Seleccione un elemento de la lista");
+            } else {
+                var parentid = $("#jstree_demo_div").jstree("get_selected")[0];
+                singlebindcontrols("@Url.Action("AddPermiso", "Permisos")/" + parentid)
+                //alert();
+            }
+
+        }
+        function editar() {
+            if ($("#jstree_demo_div").jstree("get_selected")[0] == undefined) {
+                alert("Seleccione un elemento de la lista");
+            } else {
+                var parentid = $("#jstree_demo_div").jstree("get_selected")[0];
+                singlebindcontrols("@Url.Action("EditPermiso", "Permisos")/" + parentid)
+            }
+
+        }
+    </script>    
+}

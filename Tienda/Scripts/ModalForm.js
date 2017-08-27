@@ -30,6 +30,12 @@ function bindcontrols() {
         //return false;
     });
 }
+function singlebindcontrols(href) {
+    $("#myModalContent").load(href, function () {
+        $("#myModal").modal({ keyboard: true }, 'show');
+        bindForm(this);
+    });
+}
 
 function bindForm(dialog) {
     $('form', dialog).submit(function () {

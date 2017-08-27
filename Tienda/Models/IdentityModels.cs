@@ -50,6 +50,8 @@ namespace Tienda.Models
         public int? PermisionTypeID { get; set; }
         public int? ParentID { get; set; }
 
+        
+
         [ForeignKey("PermisionTypeID")]
         public virtual PermisionType PermisionType { get; set; }
         
@@ -59,6 +61,8 @@ namespace Tienda.Models
         public virtual Permision Parent { get; set; }
 
         public virtual ICollection<Permision> Childs { get; set; }
+
+
     }
 
     [Table("AspNetRolePermisions")]
@@ -264,7 +268,6 @@ namespace Tienda.Models
         public DbSet<Permision> Permisions { get; set; }
         public DbSet<RolePermision> RolePermisions { get; set; }
 
-
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Marca> Marcas { get; set; }
@@ -285,5 +288,9 @@ namespace Tienda.Models
             modelBuilder.Entity<Producto>().Property(m => m.Imagen).IsOptional();
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<Tienda.Models.PermisionType> PermisionTypes { get; set; }
+
+        public System.Data.Entity.DbSet<Tienda.Models.AplicationRole> IdentityRoles { get; set; }
     }
 }

@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole> 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section styles{
+    <link href="~/Content/jtree/themes/default/style.min.css" rel="stylesheet" />
+}
+<h2>Roles</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <div>
+            <div id="roles-container">
+                
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rol de seguridad</th>
+                            <th>
+                                @Html.ActionLink("Crear Nuevo", "CrearRoles", "Roles", new { }, htmlAttributes: new { @class = "btn btn-primary", data_modal = "" })
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    @Html.BootstrapIcon_Button("Editar", "Edit", "Edit", "Producto", btnType: "btn-warning", icon: "fa-pencil", routeValues: new { id = item.Id }, htmlAtributes: new { data_modal_file = "" })
+                                    <button onclick="ver_permisos_role('@item.Id')" class="btn btn-success">Ver permisos <i class="fa fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <form action="@Url.Action("SaveRolePermisos", "Roles")" method="post">
+            <div id="jstree_demo_div"></div>
+            <button id="btnGuardarPermisos" type="submit" class="hidden">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+            
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/Scripts/ModalForm.js"></script>
+    <script type="text/javascript" src="~/Scripts/jstree/jstree.min.js"></script>
+    <script>
+        var jstree;
+        $(document).ready(function () {
+            $("form").submit(function (e) {
+                var checked_ids = [];
+                $.each($("#jstree_demo_div").jstree("get_checked", true), function () {
+                    checked_ids.push(this.id); 
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: this.action,
+                    data: checked_ids,
+                    success: success,
+                    dataType: dataType
+                });
+                return false;
+            });
+        });
+
+        function ver_permisos_role(role) {
+
+            var data = { "roleid": role };
+            $.ajax({
+                url: "@Url.Action("GerPermisos", "Roles")",
+                method: "GET",
+                data: data,
+                success: function (permisos) {
+                    if (permisos != undefined && permisos.length > 0) {
+                        $("#myModalContent").empty();
+                        jstree = $('#jstree_demo_div').jstree({
+                            "core": {
+                                "animation": 0,
+                                "check_callback": true,
+                                "themes": { "stripes": true },
+                                'data': permisos
+                            },
+                            "types": {
+                                "Modulo": {
+                                    "icon": "glyphicon glyphicon-th",
+                                    "valid_children": ["Sub Modulo", "Menu", "Boton"]
+                                },
+                                "Sub Modulo": {
+                                    "icon": "glyphicon glyphicon-th-large",
+                                    "valid_children": ["Menu", "Boton"]
+                                },
+                                "Menu": {
+                                    "icon": "glyphicon glyphicon-align-justify",
+                                    "valid_children": ["Sub Menu"]
+                                },
+                                "Sub Menu": {
+                                    "icon": "glyphicon glyphicon-list",
+                                    "valid_children": ["Boton"]
+                                },
+                                "Boton": {
+                                    "icon": "glyphicon glyphicon-inbox",
+                                    "valid_children": []
+                                }
+                            },
+                            "checkbox": {
+                                three_state: false,
+                                cascade: 'down'
+                            },
+
+                            "plugins": [
+                               "wholerow",
+                               "types",
+                               "checkbox"
+                            ]
+                        });
+                        jstree.bind("loaded.jstree", function (event, data) {
+                            // you get two params - event & data - check the core docs for a detailed description
+                            $(this).jstree("open_all");
+                        });
+                        $("#btnGuardarPermisos").removeClass("hidden");
+                    } else {
+                        $("#myModalContent").empty();
+                        $("#myModalContent").append('<div class="alert alert-danger">Ocurrio un error inesperado</div>')
+                        $("#btnGuardarPermisos").addClass("hidden");
+                    }
+                    
+                }
+            });
+        }
+
+        
+
+    </script>
+}
+

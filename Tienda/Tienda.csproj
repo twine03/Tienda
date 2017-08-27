@@ -213,7 +213,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
+    <Compile Include="Controllers\PermisosController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="CustomValidations\CompararPrecioAttribute.cs" />
     <Compile Include="CustomValidations\ExcludeCharAttribute.cs" />
@@ -243,6 +245,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\jtree\themes\default\32px.png" />
+    <Content Include="Content\jtree\themes\default\40px.png" />
+    <Content Include="Content\jtree\themes\default\style.css" />
+    <Content Include="Content\jtree\themes\default\style.min.css" />
+    <Content Include="Content\jtree\themes\default\throbber.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -263,6 +270,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomValidations.js" />
+    <Content Include="Scripts\jstree\jstree.min.js" />
     <Content Include="Scripts\ModalForm.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -330,6 +338,10 @@
     <Content Include="Views\Page400.cshtml" />
     <Content Include="Views\Producto\_Lista.cshtml" />
     <Content Include="Views\Account\_Login.cshtml" />
+    <Content Include="Views\Permisos\Index.cshtml" />
+    <Content Include="Views\Permisos\AddPermiso.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\CrearRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
