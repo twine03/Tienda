@@ -16,7 +16,7 @@ namespace Tienda.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Producto
-        [Authorize(Roles ="0004")]
+        [Authorize(Roles = "458896")]
         public ActionResult Index()
         {
             var productos = db.Productos.ToList();
@@ -24,7 +24,7 @@ namespace Tienda.Controllers
         }
 
 
-        [Authorize(Roles = "0004")]
+        [Authorize(Roles = "458896")]
         public ActionResult Lista()
         {
             var productos = db.Productos.ToList();
@@ -32,7 +32,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Details/5
-        [Authorize(Roles = "0004")]
+        [Authorize(Roles = "458896")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,7 +51,7 @@ namespace Tienda.Controllers
         }
 
         // GET: Producto/Create
-        [Authorize(Roles = "0001")]
+        [Authorize(Roles = "458896")]
         public ActionResult Create()
         {
             if (Request.IsAuthenticated)

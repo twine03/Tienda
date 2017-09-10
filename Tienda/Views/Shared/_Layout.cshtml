@@ -26,11 +26,7 @@
                     @Html.MenuItem("Inicio", "Index", "Home")
                     @Html.MenuItem("Acerca de", "About", "Home")
                     @Html.MenuItem("Contacto", "Contact", "Home")
-                    @*
-                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    *@
+                    
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" 
                            data-toggle="dropdown" role="button" 
@@ -41,14 +37,24 @@
                         <ul class="dropdown-menu">
                             @Html.MenuItem("Categorias", "Index", "Categoria")
                             @Html.MenuItem("Marcas", "Index", "Marca")
-                            @if (User.IsInRole("0004"))
+                            @if (User.IsInRole("458896"))
                             {
                                 @Html.MenuItem("Productos", "Index", "Producto")
                             }
                             
                         </ul>
                     </li>
-                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                           data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            Reportes
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @Html.MenuItem("Listado de Productos", "Productos", "Reports")
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

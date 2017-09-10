@@ -16,6 +16,7 @@ namespace Tienda
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ControllerBuilder.Current.DefaultNamespaces.Add("Tienda.Controllers");
         }
     }
 }

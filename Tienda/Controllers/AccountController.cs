@@ -73,7 +73,8 @@ namespace Tienda.Controllers
             }
             var rolemanager = new CustomRolePrivider();
             var user =  UserManager.FindByName(model.Email);
-            UserManager.AddToRole(user.Id, "Publico");
+            if (user!=null)
+                UserManager.AddToRole(user.Id, "Publico");
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
